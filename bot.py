@@ -20,12 +20,16 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
 
-def set_win_conditions() -> list:
+def set_win_conditions() -> str:
     output = []
     for key in mvar.win_conditions.keys():
         if random.choice(mvar.win_conditions[key]):
             output.append(key)
-    return output
+
+    if output:
+        return ", ".join(output)
+    else:
+        return "Deathmatch"
 
 def get_factors(num: int) -> list:
     factors = []
@@ -88,7 +92,7 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'**Team {team}**: {members}\n    '
+        team_assignments += f'**Team {team}**: {", ".join(members)}\n    '
     return team_assignments
 
 def generate_random_match() -> str:
