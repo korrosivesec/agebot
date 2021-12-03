@@ -65,7 +65,7 @@ def pick_teams() -> str:
         print(f"AI_Player_{i} is assigned {players[f'AI_Player_{i}']}")
 
     # Create a list of players
-    player_list = players.keys()
+    player_list = list(players.keys())
 
     # Get list of potential number of teams
     num_team_candidates = get_factors(total_num_players)
