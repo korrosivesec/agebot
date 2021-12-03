@@ -88,7 +88,7 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'**Team {team}**: {members}\n'
+        team_assignments += f'**Team {team}**: {members}\n\s\s'
     return team_assignments
 
 def generate_random_match() -> str:
@@ -118,7 +118,7 @@ def generate_random_match() -> str:
     **Visibility:** _{map_visibility}_
 
     **STARTING SETTINGS**
-    =================
+    ================
     **Starting Locations:** _{starting_locations}_
     **Starting Age:** _{starting_age}_
     **Starting Resources:** _{starting_resouces}_
