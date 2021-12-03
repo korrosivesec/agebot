@@ -66,10 +66,10 @@ def pick_teams() -> str:
     players_per_team = total_num_players // num_teams
 
     teams= {}
-    for i in range(num_teams):
-        teams[i] = []
+    for i in range(num_teams - 1):
+        teams[i + 1] = []
         for j in range(players_per_team):
-            teams[i].append(players.pop(random.randint(0, len(players) - 1)))
+            teams[i + 1].append(players.pop(random.randint(0, len(players) - 1)))
 
     team_assignments = ''
 
