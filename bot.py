@@ -5,7 +5,7 @@ import random
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
-from match_variables import *
+import match_variables as mvar
 
 
 # Establish Discord client object
@@ -22,8 +22,8 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 def set_win_conditions() -> list:
     output = []
-    for key in win_conditions.keys:
-        if random.choice(win_conditions[key]):
+    for key in mvar.win_conditions.keys:
+        if random.choice(mvar.win_conditions[key]):
             output.append(key)
     return output
 
@@ -37,26 +37,26 @@ def get_factors(num: int) -> list:
 def pick_teams() -> str:
     """ Pick teams for a match. """
     # There are 8 possible teams for a match.  Find out how many open spot there are
-    open_slots = 8 - len(human_players)
+    open_slots = 8 - len(mvar.human_players)
     # Pick a random number of AI players from the number of open slots
     num_ai_players = random.randint(0, open_slots)
     # Calculate the total number of players in the match.
-    total_num_players = len(human_players) + num_ai_players
+    total_num_players = len(mvar.human_players) + num_ai_players
 
     # Make sure we have an even number of players for each team
     if total_num_players != 8:
         if (total_num_players % 2) != 0:
             num_ai_players += 1
-            total_num_players = len(human_players) + num_ai_players
+            total_num_players = len(mvar.human_players) + num_ai_players
 
     # Assign civs to human players
     players = {}
-    for player in human_players:
-        players[player] = random.choice(civs)
+    for player in mvar.human_players:
+        players[player] = random.choice(mvar.civs)
 
     # Assign civs to AI players
     for i in range(num_ai_players):
-        players[f'AI_Player_{i}'] = random.choice(civs)
+        players[f'AI_Player_{i}'] = random.choice(mvar.civs)
 
     # Get list of potential number of teams
     num_team_candidates = get_factors(total_num_players)
@@ -78,13 +78,13 @@ def pick_teams() -> str:
     return team_assignments
 
 def generate_random_match() -> str:
-    map = random.choice(maps)
-    map_size = random.choice(map_size)
-    map_visibility = random.choice(map_visibility)
-    biome = random.choice(biomes)
-    starting_locations = random.choice(starting_locations)
-    starting_age = random.choices(starting_age)
-    starting_resouces = random.choices(starting_resouces)
+    map = random.choice(mvar.maps)
+    map_size = random.choice(mvar.map_size)
+    map_visibility = random.choice(mvar.map_visibility)
+    biome = random.choice(mvar.biomes)
+    starting_locations = random.choice(mvar.starting_locations)
+    starting_age = random.choices(mvar.starting_age)
+    starting_resouces = random.choices(mvar.starting_resouces)
     team_assignments = pick_teams()
     
 
