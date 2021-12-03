@@ -105,6 +105,8 @@ def generate_random_match() -> str:
     win_conditions = set_win_conditions()
 
     match_string = f"""
+    WOLOLO!! Random match settings generated!
+
     **TEAMS**
     =====
     {team_assignments}
