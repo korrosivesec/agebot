@@ -38,10 +38,13 @@ def pick_teams() -> str:
     """ Pick teams for a match. """
     # There are 8 possible teams for a match.  Find out how many open spot there are
     open_slots = 8 - len(mvar.human_players)
+    print(f"Open slots: {open_slots}")
     # Pick a random number of AI players from the number of open slots
     num_ai_players = random.randint(0, open_slots)
+    print(f"Number of AI players: {num_ai_players}")
     # Calculate the total number of players in the match.
     total_num_players = len(mvar.human_players) + num_ai_players
+    print(f"Total number of players: {total_num_players}")
 
     # Make sure we have an even number of players for each team
     if total_num_players != 8:
@@ -49,27 +52,33 @@ def pick_teams() -> str:
             num_ai_players += 1
             total_num_players = len(mvar.human_players) + num_ai_players
 
+    print(f"Total number of players after rebalancing: {total_num_players}")
     # Assign civs to human players
     players = {}
     for player in mvar.human_players:
         players[player] = random.choice(mvar.civs)
+        print(f"{player} is assigned {players[player]}")
 
     # Assign civs to AI players
     for i in range(num_ai_players):
         players[f'AI_Player_{i}'] = random.choice(mvar.civs)
+        print(f"AI_Player_{i} is assigned {players[f'AI_Player_{i}']}")
 
     # Get list of potential number of teams
     num_team_candidates = get_factors(total_num_players)
+    print(f"Possible number of teams: {num_team_candidates}")
     # Randomly pick the number of teams
     num_teams = random.choice(num_team_candidates)
+    print(f"Number of teams: {num_teams}")
 
     players_per_team = total_num_players // num_teams
+    print(f"Players per team: {players_per_team}")
 
     teams= {}
-    for i in range(num_teams - 1):
-        teams[i + 1] = []
+    for i in range(1, num_teams):
+        teams[i] = []
         for j in range(players_per_team):
-            teams[i + 1].append(players.pop(random.randint(0, len(players) - 1)))
+            teams[i].append(players.pop(random.randint(0, len(players) - 1)))
 
     team_assignments = ''
 
