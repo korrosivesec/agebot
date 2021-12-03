@@ -75,9 +75,9 @@ def pick_teams() -> str:
     print(f"Players per team: {players_per_team}")
 
     teams= {}
-    for i in range(1, num_teams):
+    for i in range(1, num_teams + 1):
         teams[i] = []
-        for j in range(players_per_team):
+        for j in range(1, players_per_team + 1):
             teams[i].append(players.pop(random.randint(0, len(players) - 1)))
 
     team_assignments = ''
