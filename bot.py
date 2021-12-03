@@ -29,10 +29,10 @@ def set_win_conditions() -> list:
 
 def get_factors(num: int) -> list:
     factors = []
-    for i in range(1, num):
+    for i in range(1, num + 1):
         if num % i == 0:
             factors.append(i)
-    return factors[1:-1]
+    return factors[1:]
 
 def pick_teams() -> str:
     """ Pick teams for a match. """
