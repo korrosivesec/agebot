@@ -77,7 +77,7 @@ def pick_teams() -> str:
         team_assignments += f'Team {team}: {members}\n'
     return team_assignments
 
-def generate_random_match(num_players: int) -> str:
+def generate_random_match() -> str:
     map = random.choice(maps)
     map_size = random.choice(map_size)
     map_visibility = random.choice(map_visibility)
@@ -85,7 +85,7 @@ def generate_random_match(num_players: int) -> str:
     starting_locations = random.choice(starting_locations)
     starting_age = random.choices(starting_age)
     starting_resouces = random.choices(starting_resouces)
-    team_assignments = pick_teams(num_players)
+    team_assignments = pick_teams()
     
 
     win_conditions = set_win_conditions()
@@ -123,7 +123,7 @@ async def on_ready():
     print('------')
 
 @bot.command()
-async def wololo(ctx, num_players: int) -> dict:
+async def wololo(ctx) -> dict:
     """Generates random match parameters for a given number of players"""
     match_settings = generate_random_match(num_players)
     await ctx.send(match_settings)
