@@ -80,7 +80,7 @@ def pick_teams() -> str:
     teams= {}
     for team_number in range(1, num_teams + 1):
         teams[team_number] = []
-        print(f"Assigning Team {i} ...")
+        print(f"Assigning Team {team_number} ...")
         for j in range(players_per_team):
             current_pick = player_list.pop(random.randint(0, len(player_list) - 1))
             teams[team_number].append(current_pick)
