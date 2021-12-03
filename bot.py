@@ -22,7 +22,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 def set_win_conditions() -> list:
     output = []
-    for key in mvar.win_conditions.keys:
+    for key in mvar.win_conditions.keys():
         if random.choice(mvar.win_conditions[key]):
             output.append(key)
     return output
