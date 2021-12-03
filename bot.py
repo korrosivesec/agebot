@@ -60,7 +60,7 @@ def pick_teams() -> str:
         print(f"{player} is assigned {players[player]}")
 
     # Assign civs to AI players
-    for i in range(num_ai_players):
+    for i in range(1, num_ai_players + 1):
         players[f'AI_Player_{i}'] = random.choice(mvar.civs)
         print(f"AI_Player_{i} is assigned {players[f'AI_Player_{i}']}")
 
@@ -76,10 +76,10 @@ def pick_teams() -> str:
 
     teams= {}
     for i in range(1, num_teams + 1):
-        teams[i] = []
+        teams[str(i)] = []
         print(f"Assigning Team {i} ...")
         for j in range(players_per_team):
-            teams[i].append(players.pop(random.randint(0, len(players) - 1)))
+            teams[str(i)].append(players.pop(random.randint(0, len(players) - 1)))
 
     team_assignments = ''
 
