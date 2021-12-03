@@ -88,7 +88,7 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'Team {team}: {members}\n'
+        team_assignments += f'**Team {team}**: {members}\n'
     return team_assignments
 
 def generate_random_match() -> str:
@@ -97,8 +97,8 @@ def generate_random_match() -> str:
     map_visibility = random.choice(mvar.map_visibility)
     biome = random.choice(mvar.biomes)
     starting_locations = random.choice(mvar.starting_locations)
-    starting_age = random.choices(mvar.starting_age)
-    starting_resouces = random.choices(mvar.starting_resouces)
+    starting_age = random.choice(mvar.starting_age)
+    starting_resouces = random.choice(mvar.starting_resouces)
     team_assignments = pick_teams()
     
 
@@ -108,23 +108,22 @@ def generate_random_match() -> str:
     **TEAMS**
     =====
     {team_assignments}
-
     **MAP**
     ===
-    Map: _{map}_
-    Size: _{map_size}_
-    Biome: _{biome}_
-    Visibility: _{map_visibility}_
+    **Map:** _{map}_
+    **Size:** _{map_size}_
+    **Biome:** _{biome}_
+    **Visibility:** _{map_visibility}_
 
     **STARTING SETTINGS**
     =================
-    Starting Locations: _{starting_locations}_
-    Starting Age: _{starting_age}_
-    Starting Resources: _{starting_resouces}_
+    **Starting Locations:** _{starting_locations}_
+    **Starting Age:** _{starting_age}_
+    **Starting Resources:** _{starting_resouces}_
 
     **WIN CONDITIONS**
     ==============
-    Win Conditions: _{win_conditions}_
+    **Win Conditions:** _{win_conditions}_
     """
 
     return match_string
