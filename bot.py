@@ -112,7 +112,7 @@ def generate_random_match() -> str:
 
     team_assignments, num_players = pick_teams()
 
-    map_size = mvar.map_size
+    map_size = mvar.map_size.copy()
     # Remove smaller maps that are too small for the number of players
     if num_players > 2:
         map_size.remove('Micro')
