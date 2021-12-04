@@ -112,14 +112,15 @@ def generate_random_match() -> str:
 
     team_assignments, num_players = pick_teams()
 
+    map_size = mvar.map_size
     # Remove smaller maps that are too small for the number of players
     if num_players > 2:
-        mvar.map_size.remove('Micro')
+        map_size.remove('Micro')
     if num_players > 4:
-        mvar.map_size.remove('Small')
-        mvar.map_size.remove('Medium')
-    print(f"Given there are {num_players} the available map size options are: {mvar.map_size}")
-    map_size = random.choice(mvar.map_size)
+        map_size.remove('Small')
+        map_size.remove('Medium')
+    print(f"Given there are {num_players} the available map size options are: {map_size}")
+    map_size = random.choice(map_size)
     
 
     win_conditions = set_win_conditions()
