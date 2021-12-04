@@ -94,6 +94,7 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
+        print (f"Team {team}: {members}")
         team_assignments += f"**Team {team}:**\n"
         team_assignments += f"{members[0][0]} --> {members[0][1]}\n    "
     return team_assignments, len(players)
