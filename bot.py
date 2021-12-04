@@ -96,7 +96,7 @@ def pick_teams() -> str:
     spacer = " " * 8
     for team, members in teams.items():
         print (f"Team {team}: {members}")
-        team_assignments = team_assignments.rstrip(' ')
+        team_assignments = team_assignments.rstrip('      ')
         team_assignments += f"**Team {team}:**\n{spacer}"
         for member in members:
             team_assignments += f"{member[0]}:  {member[1]}\n{spacer}"
