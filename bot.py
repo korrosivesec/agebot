@@ -81,6 +81,7 @@ def pick_teams() -> str:
 
     #Convert players dict to list
     players = list(players.items())
+    print(f"Players Count: {len(players)}")
 
     teams= {}
     for team_number in range(1, num_teams + 1):
