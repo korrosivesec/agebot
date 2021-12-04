@@ -68,8 +68,6 @@ def pick_teams() -> str:
         players[f'AI_Player_{i}'] = random.choice(mvar.civs)
         print(f"AI_Player_{i} is assigned {players[f'AI_Player_{i}']}")
 
-    # Create a list of players
-    player_list = list(players.keys())
 
     # Get list of potential number of teams
     num_team_candidates = get_factors(total_num_players)
@@ -81,29 +79,38 @@ def pick_teams() -> str:
     players_per_team = total_num_players // num_teams
     print(f"Players per team: {players_per_team}")
 
+    #Convert players dict to list
+    players = list(players.items())
+
     teams= {}
     for team_number in range(1, num_teams + 1):
         teams[team_number] = []
         print(f"Assigning Team {team_number} ...")
         for j in range(players_per_team):
-            current_pick = player_list.pop(random.randint(0, len(player_list) - 1))
+            current_pick = players.pop(random.randint(0, len(players) - 1))
             teams[team_number].append(current_pick)
 
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'**Team {team}**: {", ".join(members)}\n    '
-    return team_assignments
+        team_assignments += f'**Team {team}**: {", ".join(f"{members[0]}--> {members[1]}")}\n    '
+    return team_assignments, len(players)
 
 def generate_random_match() -> str:
     map = random.choice(mvar.maps)
-    map_size = random.choice(mvar.map_size)
     map_visibility = random.choice(mvar.map_visibility)
     biome = random.choice(mvar.biomes)
     starting_locations = random.choice(mvar.starting_locations)
     starting_age = random.choice(mvar.starting_age)
     starting_resouces = random.choice(mvar.starting_resouces)
-    team_assignments = pick_teams()
+
+    team_assignments, num_players = pick_teams()
+    # Remove smaller maps as options when there are more than 4 players
+    if num_players > 4:
+        mvar.map_size.remove('Micro')
+        mvar.map_size.remove('Small')
+        mvar.map_size.remove('Medium')
+    map_size = random.choice(mvar.map_size)
     
 
     win_conditions = set_win_conditions()
