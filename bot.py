@@ -93,7 +93,8 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'**Team {team}**: {",\n".join(f"{members[0][0]} --> {members[0][1]}")}\n    '
+        team_assignments += f"**Team {team}:**\n"
+        team_assignments += f"{members[0][0]} --> {members[0][1]}\n    "
     return team_assignments, len(players)
 
 def generate_random_match() -> str:
