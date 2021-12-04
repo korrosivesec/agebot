@@ -99,7 +99,7 @@ def pick_teams() -> str:
         team_assignments += f"**Team {team}:**\n{spacer}"
         for member in members:
             team_assignments += f"{member[0]}:  {member[1]}\n{spacer}"
-        team_assignments += "\n"
+        team_assignments += "\n    "
     return team_assignments, len(players)
 
 def generate_random_match() -> str:
