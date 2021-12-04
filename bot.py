@@ -93,7 +93,7 @@ def pick_teams() -> str:
     team_assignments = ''
 
     for team, members in teams.items():
-        team_assignments += f'**Team {team}**: {", ".join(members[0])}\n    '
+        team_assignments += f'**Team {team}**: {",\n".join(f"{members[0][0]} --> {members[0][1]}")}\n    '
     return team_assignments, len(players)
 
 def generate_random_match() -> str:
@@ -105,9 +105,11 @@ def generate_random_match() -> str:
     starting_resouces = random.choice(mvar.starting_resouces)
 
     team_assignments, num_players = pick_teams()
-    # Remove smaller maps as options when there are more than 4 players
-    if num_players > 4:
+
+    # Remove smaller maps that are too small for the number of players
+    if num_players > 2:
         mvar.map_size.remove('Micro')
+    if num_players > 4:
         mvar.map_size.remove('Small')
         mvar.map_size.remove('Medium')
     map_size = random.choice(mvar.map_size)
