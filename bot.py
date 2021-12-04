@@ -2,6 +2,7 @@
 import os
 import discord
 import random
+from typing import Tuple
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
@@ -38,7 +39,7 @@ def get_factors(num: int) -> list:
             factors.append(i)
     return factors[1:]
 
-def pick_teams() -> str:
+def pick_teams() -> Tuple[str, int]:
     """ Pick teams for a match. """
     # There are 8 possible teams for a match.  Find out how many open spot there are
     open_slots = 8 - len(mvar.human_players)
@@ -81,7 +82,6 @@ def pick_teams() -> str:
 
     #Convert players dict to list
     players = list(players.items())
-    print(f"Players Count: {len(players)}")
 
     teams= {}
     for team_number in range(1, num_teams + 1):
@@ -100,7 +100,7 @@ def pick_teams() -> str:
         for member in members:
             team_assignments += f"**{member[0]}:**  *{member[1]}*\n{spacer}"
         team_assignments += "\n    "
-    return team_assignments, len(players)
+    return team_assignments, total_num_players
 
 def generate_random_match() -> str:
     map = random.choice(mvar.maps)
