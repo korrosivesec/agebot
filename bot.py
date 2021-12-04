@@ -118,6 +118,7 @@ def generate_random_match() -> str:
     if num_players > 4:
         mvar.map_size.remove('Small')
         mvar.map_size.remove('Medium')
+    print(f"Given there are {num_players} the available map size options are: {mvar.map_size}")
     map_size = random.choice(mvar.map_size)
     
 
