@@ -199,6 +199,9 @@ async def on_ready():
 @bot.command()
 async def wololo(ctx, initials: str = None) -> dict:
     """Generates random match parameters for a given number of players"""
+    print(f"{ctx.message.author.name} requested a random match!")
+    print("==========================================================")
+    print('\n\n\n')
     match_settings = generate_random_match(initials)
     await ctx.send(match_settings)
 
