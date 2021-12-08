@@ -2,7 +2,7 @@
 import os
 import discord
 import random
-from typing import Tuple
+from typing import Tuple, Optional
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
@@ -39,28 +39,55 @@ def get_factors(num: int) -> list:
             factors.append(i)
     return factors[1:]
 
-def pick_teams() -> Tuple[str, int]:
+def initial_to_name(initial: str) -> str:
+    """ Convert player initial to player name. """
+    for name in mvar.human_players:
+        if name[0] == initial:
+            return name
+
+
+def validate_player_input(player_input: str) -> Tuple[bool, Optional[list]]:
+    """ Validate player input. """
+    # Check if player input is valid
+    initials = list(player_input.lower())
+
+    # We only have 4 human players
+    if len(input) > 4:
+        return False, None
+    
+    # Only accept the initial of our first names
+    for char in input:
+        if char not in 'bdjk':
+            return False, None
+
+    # Map initials to names        
+    players = list(map(initial_to_name, initials))
+    return True, players
+
+
+def pick_teams(players_input: list) -> Tuple[str, int]:
     """ Pick teams for a match. """
     # There are 8 possible teams for a match.  Find out how many open spot there are
-    open_slots = 8 - len(mvar.human_players)
+
+    open_slots = 8 - len(players_input)
     print(f"Open slots: {open_slots}")
     # Pick a random number of AI players from the number of open slots
     num_ai_players = random.randint(0, open_slots)
     print(f"Number of AI players: {num_ai_players}")
     # Calculate the total number of players in the match.
-    total_num_players = len(mvar.human_players) + num_ai_players
+    total_num_players = len(players_input) + num_ai_players
     print(f"Total number of players: {total_num_players}")
 
     # Make sure we have an even number of players for each team
     if total_num_players != 8:
         if (total_num_players % 2) != 0:
             num_ai_players += 1
-            total_num_players = len(mvar.human_players) + num_ai_players
+            total_num_players = len(players_input) + num_ai_players
 
     print(f"Total number of players after rebalancing: {total_num_players}")
     # Assign civs to human players
     players = {}
-    for player in mvar.human_players:
+    for player in players_input:
         players[player] = random.choice(mvar.civs)
         print(f"{player} is assigned {players[player]}")
 
@@ -102,7 +129,7 @@ def pick_teams() -> Tuple[str, int]:
         team_assignments += "\n    "
     return team_assignments, total_num_players
 
-def generate_random_match() -> str:
+def generate_random_match(players: Optional[str]) -> str:
     map = random.choice(mvar.maps)
     map_visibility = random.choice(mvar.map_visibility)
     biome = random.choice(mvar.biomes)
@@ -110,7 +137,15 @@ def generate_random_match() -> str:
     starting_age = random.choice(mvar.starting_age)
     starting_resouces = random.choice(mvar.starting_resouces)
 
-    team_assignments, num_players = pick_teams()
+    if players is None:
+        players = mvar.human_players
+    else:
+        valid_input, players = validate_player_input(players)
+
+    if not valid_input:
+        return "Come on man... Gimme some legit initials.\n\n Try something like this: /wololo BDJ"
+
+    team_assignments, num_players = pick_teams(players)
 
     map_size = mvar.map_size.copy()
     # Remove smaller maps that are too small for the number of players
@@ -159,9 +194,9 @@ async def on_ready():
     print('------')
 
 @bot.command()
-async def wololo(ctx) -> dict:
+async def wololo(ctx, players: str = None) -> dict:
     """Generates random match parameters for a given number of players"""
-    match_settings = generate_random_match()
+    match_settings = generate_random_match(players)
     await ctx.send(match_settings)
 
 bot.run(TOKEN)
