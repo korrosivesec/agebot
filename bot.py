@@ -143,7 +143,8 @@ def generate_random_match(initials: Optional[str]) -> str:
         human_names = mvar.human_players
         valid_input = True
     else:
-        valid_input, names = validate_player_input(initials)
+
+        valid_input, human_names = validate_player_input(initials)
 
     if not valid_input:
         return "Come on man... Gimme some legit initials.\n\n Try something like this: /wololo BDJ"
@@ -157,7 +158,7 @@ def generate_random_match(initials: Optional[str]) -> str:
     if num_players > 4:
         map_size.remove('Small')
         map_size.remove('Medium')
-    print(f"Given there are {num_players} the available map size options are: {map_size}")
+    print(f"Given there are {num_players} players, the available map size options are: {map_size}")
     map_size = random.choice(map_size)
     
 
