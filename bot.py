@@ -52,11 +52,11 @@ def validate_player_input(player_input: str) -> Tuple[bool, Optional[list]]:
     initials = list(player_input.lower())
 
     # We only have 4 human players
-    if len(input) > 4:
+    if len(initials) > 4:
         return False, None
     
     # Only accept the initial of our first names
-    for char in input:
+    for char in initials:
         if char not in 'bdjk':
             return False, None
 
