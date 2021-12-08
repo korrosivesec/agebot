@@ -82,11 +82,12 @@ def pick_teams(human_names: list) -> Tuple[str, int]:
     print(f"Total number of players: {total_num_players}")
 
     # Make sure we have an even number of players for each team
-    #if total_num_players != 8:
-    #    if (total_num_players % 2) != 0:
-    #        num_ai_players += 1
-    #        total_num_players = len(human_names) + num_ai_players
-    #print(f"Total number of players after rebalancing: {total_num_players}")
+    # This increases the odds of teams with multiple players
+    if total_num_players != 8:
+        if (total_num_players % 2) != 0:
+            num_ai_players += 1
+            total_num_players = len(human_names) + num_ai_players
+    print(f"Total number of players after rebalancing: {total_num_players}")
     
     # Assign civs to human players
     players = {}
