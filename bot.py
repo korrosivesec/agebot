@@ -139,6 +139,7 @@ def generate_random_match(players: Optional[str]) -> str:
 
     if players is None:
         players = mvar.human_players
+        valid_input = True
     else:
         valid_input, players = validate_player_input(players)
 
