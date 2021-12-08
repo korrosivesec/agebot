@@ -65,31 +65,33 @@ def validate_player_input(player_input: str) -> Tuple[bool, Optional[list]]:
     return True, players
 
 
-def pick_teams(players_input: list) -> Tuple[str, int]:
+def pick_teams(human_names: list) -> Tuple[str, int]:
     """ Pick teams for a match. """
+    
     # There are 8 possible teams for a match.  Find out how many open spot there are
-
-    open_slots = 8 - len(players_input)
+    open_slots = 8 - len(human_names)
     print(f"Open slots: {open_slots}")
+    
     # Pick a random number of AI players from the number of open slots
     num_ai_players = random.randint(0, open_slots)
     print(f"Number of AI players: {num_ai_players}")
+    
     # Calculate the total number of players in the match.
-    total_num_players = len(players_input) + num_ai_players
+    total_num_players = len(human_names) + num_ai_players
     print(f"Total number of players: {total_num_players}")
 
     # Make sure we have an even number of players for each team
     if total_num_players != 8:
         if (total_num_players % 2) != 0:
             num_ai_players += 1
-            total_num_players = len(players_input) + num_ai_players
-
+            total_num_players = len(human_names) + num_ai_players
     print(f"Total number of players after rebalancing: {total_num_players}")
+    
     # Assign civs to human players
     players = {}
-    for player in players_input:
-        players[player] = random.choice(mvar.civs)
-        print(f"{player} is assigned {players[player]}")
+    for name in human_names:
+        players[name] = random.choice(mvar.civs)
+        print(f"{name} is assigned {players[name]}")
 
     # Assign civs to AI players
     for i in range(1, num_ai_players + 1):
@@ -129,7 +131,7 @@ def pick_teams(players_input: list) -> Tuple[str, int]:
         team_assignments += "\n    "
     return team_assignments, total_num_players
 
-def generate_random_match(players: Optional[str]) -> str:
+def generate_random_match(initials: Optional[str]) -> str:
     map = random.choice(mvar.maps)
     map_visibility = random.choice(mvar.map_visibility)
     biome = random.choice(mvar.biomes)
@@ -137,16 +139,16 @@ def generate_random_match(players: Optional[str]) -> str:
     starting_age = random.choice(mvar.starting_age)
     starting_resouces = random.choice(mvar.starting_resouces)
 
-    if players is None:
-        players = mvar.human_players
+    if initials is None:
+        human_names = mvar.human_players
         valid_input = True
     else:
-        valid_input, players = validate_player_input(players)
+        valid_input, names = validate_player_input(initials)
 
     if not valid_input:
         return "Come on man... Gimme some legit initials.\n\n Try something like this: /wololo BDJ"
 
-    team_assignments, num_players = pick_teams(players)
+    team_assignments, num_players = pick_teams(human_names)
 
     map_size = mvar.map_size.copy()
     # Remove smaller maps that are too small for the number of players
@@ -195,9 +197,9 @@ async def on_ready():
     print('------')
 
 @bot.command()
-async def wololo(ctx, players: str = None) -> dict:
+async def wololo(ctx, initials: str = None) -> dict:
     """Generates random match parameters for a given number of players"""
-    match_settings = generate_random_match(players)
+    match_settings = generate_random_match(initials)
     await ctx.send(match_settings)
 
 bot.run(TOKEN)
