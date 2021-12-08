@@ -68,6 +68,7 @@ def validate_player_input(player_input: str) -> Tuple[bool, Optional[list]]:
 def pick_teams(human_names: list) -> Tuple[str, int]:
     """ Pick teams for a match. """
     
+    print(f"Human players: {human_names}")
     # There are 8 possible teams for a match.  Find out how many open spot there are
     open_slots = 8 - len(human_names)
     print(f"Open slots: {open_slots}")
