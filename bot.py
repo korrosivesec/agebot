@@ -111,7 +111,7 @@ def pick_teams(human_names: list) -> Tuple[str, int]:
 
     #Convert players dict to list
     players = list(players.items())
-
+    print(f"Player List: {players}")
     teams= {}
     for team_number in range(1, num_teams + 1):
         teams[team_number] = []
@@ -143,11 +143,9 @@ def generate_random_match(initials: Optional[str]) -> str:
         human_names = mvar.human_players
         valid_input = True
     else:
-
         valid_input, human_names = validate_player_input(initials)
-
-    if not valid_input:
-        return "Come on man... Gimme some legit initials.\n\n Try something like this: /wololo BDJ"
+        if not valid_input:
+            return "Come on man... Gimme some legit initials.\n\n Try something like this: /wololo BDJ"
 
     team_assignments, num_players = pick_teams(human_names)
 
