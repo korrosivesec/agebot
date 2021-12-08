@@ -42,7 +42,7 @@ def get_factors(num: int) -> list:
 def initial_to_name(initial: str) -> str:
     """ Convert player initial to player name. """
     for name in mvar.human_players:
-        if name[0] == initial:
+        if name[0].lower() == initial:
             return name
 
 
